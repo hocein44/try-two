@@ -1,7 +1,7 @@
 export interface Product {
     name: String;
-    price: Number;
+    price: number;
     description: String ;
-    stock: Number;
+    stock: number;
 }
 
