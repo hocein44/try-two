@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ApiService } from './services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +8,5 @@ import { ApiService } from './services/api.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  data: any;
-
-  constructor(private apiService: ApiService) {}
-  ngOnInit() {
-    this.apiService.getData().subscribe(response => {
-      this.data = response;
-      console.log(this.data);
-    });
-  }
-  
+  title = 'frontend';
 }
