@@ -22,7 +22,8 @@ export class ProductFormComponent {
     price: 0,
     image: '',
     description: '',
-    stock: 0
+    stock: 0,
+    category:'',
   };
   productId: string | null = null;
   selectedFile: File | null = null;
@@ -48,6 +49,7 @@ export class ProductFormComponent {
     formData.append('price', this.product.price.toString());
     formData.append('description', this.product.description);
     formData.append('stock', this.product.stock.toString());
+    formData.append('category', this.product.category);
   
     // Append image if selected
     if (this.selectedFile) {

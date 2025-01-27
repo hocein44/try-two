@@ -13,5 +13,7 @@
   <input type="number" [(ngModel)]="product.stock" name="stock" required>
   <label>Image:</label>
   <input type="file" (change)="onFileSelected($event)" />
+  <label>category:</label>
+  <input [(ngModel)]="product.category" name="category" required>
   <button type="submit">Save</button>
 </form>

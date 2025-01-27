@@ -29,7 +29,7 @@ const upload = multer({ storage });
 
 // POST route to add a new product
 router.post('/AddProduct', upload.single('image'), (req, res) => {
-  const { name, price, description, stock } = req.body;
+  const { name, price, description, stock ,category} = req.body;
   const imagePath = req.file ? `/uploads/${req.file.filename}` : '';
 
   // Create a new product
@@ -38,7 +38,8 @@ router.post('/AddProduct', upload.single('image'), (req, res) => {
     price,
     description,
     stock,
-    image: imagePath
+    image: imagePath,
+    category
   });
 
   newProduct.save()
@@ -68,19 +69,24 @@ router.get('/GetProductById/:id', async (req, res) => {
 });
 
 // ✅ Update a Product (PUT)
-router.put('/UpdateProduct/:id', async (req, res) => {
+router.put('/UpdateProduct/:id', upload.single('image'), async (req, res) => {
   try {
+    const { name, price, description, stock ,category} = req.body;
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : req.body.image; // Use old image if not updating
+
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      { name, price, description, stock, image: imagePath,category},
       { new: true }
     );
+
     if (!updatedProduct) return res.status(404).json({ message: 'Product not found' });
     res.status(200).json(updatedProduct);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // ✅ Delete a Product (DELETE)
 router.delete('/DelProducts/:id', async (req, res) => {
