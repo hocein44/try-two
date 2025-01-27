@@ -19,11 +19,11 @@ export class ApiService {
     return this.http.get<Product>(`${this.apiUrl}/GetProductById/${id}`);
   }
 
-  addProduct(product: any): Observable<Product> {
+  addProduct(product: FormData): Observable<Product> {
     return this.http.post<Product>(`${this.apiUrl}/AddProduct`, product);
   }
 
-  updateProduct(id: string, product: Product): Observable<Product> {
+  updateProduct(id: string, product: FormData): Observable<Product> {
     return this.http.put<Product>(`${this.apiUrl}/UpdateProduct/${id}`, product);
   }
 

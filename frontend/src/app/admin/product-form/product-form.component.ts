@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms'; // ✅ Import this
 
 
 
+
 @Component({
   selector: 'app-product-form',
   imports: [FormsModule],
@@ -14,25 +15,7 @@ import { FormsModule } from '@angular/forms'; // ✅ Import this
   styleUrl: './product-form.component.css'
 })
 export class ProductFormComponent {
-  // product = { name: '', price: 0 };
-  // productId: string | null = null;
-
-  // constructor(private productService: ApiService, private route: ActivatedRoute, private router: Router) {}
-
-  // ngOnInit(): void {
-  //   this.productId = this.route.snapshot.paramMap.get('id');
-  //   if (this.productId) {
-  //     this.productService.getProductById(this.productId).subscribe(data => this.product = data);
-  //   }
-  // }
-
-  // saveProduct(): void {
-  //   if (this.productId) {
-  //     this.productService.updateProduct(this.productId, this.product).subscribe(() => this.router.navigate(['/admin/products']));
-  //   } else {
-  //     this.productService.addProduct(this.product).subscribe(() => this.router.navigate(['/admin/products']));
-  //   }
-  // }
+ 
   product: Product = {
     _id: '',
     name: '',
@@ -42,9 +25,12 @@ export class ProductFormComponent {
     stock: 0
   };
   productId: string | null = null;
+  selectedFile: File | null = null;
 
   constructor(private productService: ApiService, private route: ActivatedRoute, private router: Router) {}
-
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
   ngOnInit(): void {
     this.productId = this.route.snapshot.paramMap.get('id');
     if (this.productId) {
@@ -55,15 +41,30 @@ export class ProductFormComponent {
   }
 
   saveProduct(): void {
+    const formData = new FormData();
+    
+    // Append product details
+    formData.append('name', this.product.name);
+    formData.append('price', this.product.price.toString());
+    formData.append('description', this.product.description);
+    formData.append('stock', this.product.stock.toString());
+  
+    // Append image if selected
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+  
     if (this.productId) {
-      this.productService.updateProduct(this.productId, this.product).subscribe(() => 
+      this.productService.updateProduct(this.productId, formData).subscribe(() => 
         this.router.navigate(['product-form'])
       );
     } else {
-      this.productService.addProduct(this.product).subscribe(() => 
+      this.productService.addProduct(formData).subscribe(() => 
         this.router.navigate(['product-form'])
       );
     }
   }
+  
+
 }
 

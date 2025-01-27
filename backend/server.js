@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes'); // Import Routes
@@ -8,6 +9,7 @@ const bodyParser = require('body-parser');
 
 
 const app = express();
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
