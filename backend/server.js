@@ -3,14 +3,17 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes'); // Import Routes
+const authRoutes = require('./routes/auth');
+const bodyParser = require('body-parser');
 
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json());
 connectDB();
 // ✅ Use Product Routes
-app.use('/products', productRoutes);
+app.use('/api',productRoutes, authRoutes);
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

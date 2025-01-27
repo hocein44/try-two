@@ -4,10 +4,10 @@ const Product = require('../models/Product'); // Import Product Model
 const router = express.Router();
 
 // ✅ Create a New Product (POST)
-router.post('/', async (req, res) => {
+router.post('/AddProduct', async (req, res) => {
     try {
-        const { name, price, description, stock } = req.body;
-        const newProduct = new Product({ name, price, description, stock });
+        const { name, price,image, description, stock,category } = req.body;
+        const newProduct = new Product({ name,price,image, description, stock,category });
         await newProduct.save();
         res.status(201).json(newProduct);
     } catch (error) {
@@ -16,17 +16,21 @@ router.post('/', async (req, res) => {
 });
 
 // ✅ Get All Products (GET)
-router.get('/', async (req, res) => {
+router.get('/GetProducts', async (req, res) => {
     try {
         const products = await Product.find();
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-});
+});   
+
+
+
+
 
 // ✅ Get a Single Product by ID (GET)
-router.get('/:id', async (req, res) => {
+router.get('/GetProductById/:id', async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) return res.status(404).json({ message: 'Product not found' });
@@ -36,8 +40,9 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+
 // ✅ Update a Product (PUT)
-router.put('/:id', async (req, res) => {
+router.put('/UpdateProduct/:id', async (req, res) => {
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
@@ -52,7 +57,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // ✅ Delete a Product (DELETE)
-router.delete('/:id', async (req, res) => {
+router.delete('/DelProducts/:id', async (req, res) => {
     try {
         const deletedProduct = await Product.findByIdAndDelete(req.params.id);
         if (!deletedProduct) return res.status(404).json({ message: 'Product not found' });

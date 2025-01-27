@@ -1,0 +1,10 @@
+<h3>{{ productId ? 'Edit' : 'Add' }} Product</h3>
+<form (ngSubmit)="saveProduct()">
+  <label>Name:</label>
+  <input [(ngModel)]="product.name" name="name" required>
+  
+  <label>Price:</label>
+  <input type="number" [(ngModel)]="product.price" name="price" required>
+
+  <button type="submit">Save</button>
+</form>
