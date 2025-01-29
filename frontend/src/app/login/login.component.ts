@@ -22,7 +22,7 @@ export class LoginComponent {
         // Store token and role in local storage
         localStorage.setItem('token', response.token);
         localStorage.setItem('role', response.role); 
-
+        this.authService.setToken(response.token); // ✅ Store token
         // Redirect based on user role
         if (response.role === 'admin') {
           this.router.navigate(['/admin-dashboard']);

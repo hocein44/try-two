@@ -8,7 +8,7 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 
 export const routes: Routes = [
-    {path:'',redirectTo:'signup',pathMatch:'full'},
+    {path:'',redirectTo:'home',pathMatch:'full'},
     {path:'products', component: ProductComponent},
     {path:'home', component: HomeComponent,},
     { path: 'signup', component: SignupComponent },

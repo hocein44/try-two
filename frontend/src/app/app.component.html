@@ -13,7 +13,11 @@
           <li class="nav-item"><a class="nav-link" href="#">About</a></li>
           <li class="nav-item"><a class="nav-link" routerLink="/products" routerLinkActive="router-link-active">Products</a></li>
         </ul>
-        <a href="#" class="btn btn-outline-dark ms-3">CONTACT</a>
+        <!-- <a href="#" class="btn btn-outline-dark ms-3">CONTACT</a> -->
+        <a *ngIf="!isAuthenticated()" routerLink="/login" class="btn btn-outline-dark ms-3">LOGIN</a>
+
+        <!-- Show Logout button if authenticated -->
+        <button *ngIf="isAuthenticated()" class="btn btn-outline-danger ms-3" (click)="logout()">LOGOUT</button>
       </div>
     </div>
   </nav>
