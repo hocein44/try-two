@@ -15,5 +15,7 @@
   <input type="file" (change)="onFileSelected($event)" />
   <label>category:</label>
   <input [(ngModel)]="product.category" name="category" required>
+  <label>code:</label>
+  <input [(ngModel)]="product.code" name="code" required>
   <button type="submit">Save</button>
 </form>

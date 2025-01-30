@@ -1,0 +1,6 @@
+<!-- cart.component.html -->
+<div *ngFor="let item of cartItems">
+    <p>{{ item.name }} - {{ item.price }} x {{ item.quantity }}</p>
+    <button (click)="removeFromCart(item.id)">Remove</button>
+  </div>
+  <button (click)="checkout()">Checkout</button>

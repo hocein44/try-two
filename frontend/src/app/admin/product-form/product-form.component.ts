@@ -24,6 +24,7 @@ export class ProductFormComponent {
     description: '',
     stock: 0,
     category:'',
+    code:''
   };
   productId: string | null = null;
   selectedFile: File | null = null;
@@ -50,6 +51,7 @@ export class ProductFormComponent {
     formData.append('description', this.product.description);
     formData.append('stock', this.product.stock.toString());
     formData.append('category', this.product.category);
+    formData.append('code', this.product.code);
   
     // Append image if selected
     if (this.selectedFile) {
@@ -58,11 +60,11 @@ export class ProductFormComponent {
   
     if (this.productId) {
       this.productService.updateProduct(this.productId, formData).subscribe(() => 
-        this.router.navigate(['product-form'])
+        this.router.navigate(['/admin-dashboard/products-list'])
       );
     } else {
       this.productService.addProduct(formData).subscribe(() => 
-        this.router.navigate(['product-form'])
+        this.router.navigate(['/admin-dashboard/products-list'])
       );
     }
   }

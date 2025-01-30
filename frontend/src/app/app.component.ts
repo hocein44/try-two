@@ -6,7 +6,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, NgIf],
+  imports: [RouterModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],  // Fixed to styleUrls (plural)
   standalone: true,  // Declaring this as a standalone component

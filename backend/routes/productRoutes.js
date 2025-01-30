@@ -29,7 +29,7 @@ const upload = multer({ storage });
 
 // POST route to add a new product
 router.post('/AddProduct', upload.single('image'), (req, res) => {
-  const { name, price, description, stock ,category} = req.body;
+  const { name, price, description, stock ,category,code} = req.body;
   const imagePath = req.file ? `/uploads/${req.file.filename}` : '';
 
   // Create a new product
@@ -39,7 +39,8 @@ router.post('/AddProduct', upload.single('image'), (req, res) => {
     description,
     stock,
     image: imagePath,
-    category
+    category,
+    code
   });
 
   newProduct.save()
@@ -71,12 +72,12 @@ router.get('/GetProductById/:id', async (req, res) => {
 // ✅ Update a Product (PUT)
 router.put('/UpdateProduct/:id', upload.single('image'), async (req, res) => {
   try {
-    const { name, price, description, stock ,category} = req.body;
+    const { name, price, description, stock ,category,code} = req.body;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : req.body.image; // Use old image if not updating
 
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      { name, price, description, stock, image: imagePath,category},
+      { name, price, description, stock, image: imagePath,category,code},
       { new: true }
     );
 

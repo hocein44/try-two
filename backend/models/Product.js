@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
     description: { type: String },
     stock: { type: Number, default: 0 },
     category: { type: String },
+    code: { type: String }
 });
 
 const Product = mongoose.model('Product', productSchema);
