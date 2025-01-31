@@ -16,7 +16,8 @@ export class UserDashboardComponent {
   
     logout() {
       this.authService.logout(); // ✅ Clear token
-      this.router.navigate(['/login']); // ✅ Redirect to login
+      this.router.navigate(['/dashboard/login']); // ✅ Redirect to login
+    
     }
   
     isAuthenticated(): boolean {

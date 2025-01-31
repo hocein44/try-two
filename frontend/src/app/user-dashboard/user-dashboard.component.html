@@ -18,7 +18,7 @@
               <a class="nav-link" routerLink="./products" routerLinkActive="router-link-active">Products</a>
             </li>
           </ul>
-          <a *ngIf="!isAuthenticated()" routerLink="/login" class="btn btn-outline-dark ms-3">LOGIN</a>
+          <a *ngIf="!isAuthenticated()" routerLink="./login" class="btn btn-outline-dark ms-3">LOGIN</a>
           <button *ngIf="isAuthenticated()" class="btn btn-outline-danger ms-3" (click)="logout()">LOGOUT</button>
         </div>
       </div>

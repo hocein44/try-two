@@ -10,15 +10,14 @@ import { ProductListComponent } from './admin/product-list/product-list.componen
 
 export const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-    { path: 'signup', component: SignupComponent },
-    { path: 'login', component: LoginComponent },
-    
     { 
         path: 'dashboard', 
         component: UserDashboardComponent,
         children: [
             { path: '', component: HomeComponent }, // Default: Show Home inside Dashboard
             { path: 'products', component: ProductComponent }, // Products inside Dashboard
+            { path: 'signup', component: SignupComponent },
+            { path: 'login', component: LoginComponent },
         ] 
     },
 

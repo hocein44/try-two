@@ -22,7 +22,7 @@ export class SignupComponent {
     this.authService.signup(this.username, this.password).subscribe(
       (response) => {
         alert('Signup successful!');
-        this.router.navigate(['/login']);  // Redirect to login page after successful signup
+        this.router.navigate(['/dashboard/login']);  // Redirect to login page after successful signup
       },
       (error) => {
         console.log(error);
