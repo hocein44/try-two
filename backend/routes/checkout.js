@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config(); 
 const Stripe = require('stripe');
-const stripe = Stripe('sk_test_51QnGNfFV9pRsUjXUEDUhGlvMCHiKJkf7TalIwxcYEdQEgtwjPxs3Gb7LxSq0u6DaOn1dOWjOsm1jQlMt011jBsdb00qCrt2HQp'); // Use your actual Stripe secret key
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY); // Use the secret key from .env
 const router = express.Router();
 
 router.post('/create-checkout-session', async (req, res) => {
@@ -16,9 +16,8 @@ router.post('/create-checkout-session', async (req, res) => {
           currency: 'usd',  // Set to your currency
           product_data: {
             name: item.name,
-            images: [item.image], // Product image
           },
-          unit_amount: item.price,  // Stripe expects amount in cents
+          unit_amount: item.price*100,  // Stripe expects amount in cents
         },
         quantity: item.quantity, // Quantity selected by user
       })),

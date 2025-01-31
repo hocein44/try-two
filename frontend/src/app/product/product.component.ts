@@ -15,7 +15,6 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './product.component.css'
 })
 export class ProductComponent implements OnInit {
-  
   stripe: any; 
   products: Product[] = [];
   categorizedProducts: { [key: string]: Product[] } = {};
@@ -75,23 +74,20 @@ export class ProductComponent implements OnInit {
     const items = [
       {
         name: product.name,
-        price: product.price * 100,  // Stripe expects price in cents
-        image: `http://localhost:5000${product.image}`,
-        quantity: 1,  // You can adjust this to reflect the quantity
+        price: product.price,
+        quantity: 1, // Example for quantity
       },
     ];
 
-    // Send the request to create a checkout session
-    this.http
-      .post<{ id: string }>(`${environment.apiUrl}/api/create-checkout-session`, { items })
-      .subscribe({
-        next: (response) => {
-          // Redirect to Stripe Checkout using the session ID
-          this.stripe.redirectToCheckout({ sessionId: response.id });
-        },
-        error: (error) => {
-          console.error('Error starting checkout', error);
-        },
-      });
+    // Use the CheckoutService to create a checkout session
+    this.checkoutService.createCheckoutSession(items).subscribe({
+      next: (response) => {
+        // Use the Stripe instance to redirect to the checkout page
+        this.stripe.redirectToCheckout({ sessionId: response.id });
+      },
+      error: (error) => {
+        console.error('Error starting checkout', error);
+      },
+    });
   }
 }
