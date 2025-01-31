@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes'); // Import Routes
 const authRoutes = require('./routes/auth');
 const bodyParser = require('body-parser');
+const checkoutRouter = require('./routes/checkout');
 
 
 const app = express();
@@ -15,7 +16,8 @@ app.use(bodyParser.json());
 app.use(express.json());
 connectDB();
 // ✅ Use Product Routes
-app.use('/api',productRoutes, authRoutes);
+app.use('/api',productRoutes, authRoutes,checkoutRouter);
+
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

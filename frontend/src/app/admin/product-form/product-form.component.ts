@@ -22,7 +22,6 @@ export class ProductFormComponent {
     price: 0,
     image: '',
     description: '',
-    stock: 0,
     category:'',
     code:''
   };
@@ -49,7 +48,6 @@ export class ProductFormComponent {
     formData.append('name', this.product.name);
     formData.append('price', this.product.price.toString());
     formData.append('description', this.product.description);
-    formData.append('stock', this.product.stock.toString());
     formData.append('category', this.product.category);
     formData.append('code', this.product.code);
   

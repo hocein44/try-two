@@ -3,21 +3,27 @@
   <div *ngFor="let category of getCategories()" class="mb-5">
     <h2 class="mb-4">{{ category }}</h2>
     <div class="row">
-      <!-- Iterate through products in the current category -->
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let product of categorizedProducts[category]">
+      <!-- Iterate through grouped products in the current category -->
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let key of getGroupedProductKeys(category)">
         <div class="card product-card">
           <div class="product-image">
-            <img [src]="'http://localhost:5000' + product.image" alt="{{ product.name }}" class="card-img-top">
+            <img [src]="'http://localhost:5000' + groupedProducts[key].product.image" 
+                 alt="{{ groupedProducts[key].product.name }}" 
+                 class="card-img-top">
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">${{ product.price | number: '1.2-2' }}</h6>
-            <p class="card-text">{{ product.description }}</p>
+            <h5 class="card-title">{{ groupedProducts[key].product.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              ${{ groupedProducts[key].product.price | number: '1.2-2' }}
+            </h6>
+            <p class="card-text">{{ groupedProducts[key].product.description }}</p>
             <div class="d-flex justify-content-between align-items-center">
-              <span class="badge" [ngClass]="product.stock > 0 ? 'bg-success' : 'bg-danger'">
-                {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+              <span class="badge" [ngClass]="groupedProducts[key].count > 0 ? 'bg-success' : 'bg-danger'">
+                {{ groupedProducts[key].count > 0 ? 'Available' : 'Out of Stock' }}
               </span>
-              <button class="btn btn-primary" [disabled]="product.stock === 0" (click)="addToCart(product)">Add to Cart</button>
+              <button class="btn btn-primary" [disabled]="groupedProducts[key].count === 0" (click)="onCheckout(groupedProducts[key].product)">
+                Add to Cart
+              </button>
             </div>
           </div>
         </div>

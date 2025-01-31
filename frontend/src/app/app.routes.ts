@@ -7,7 +7,6 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { ProductListComponent } from './admin/product-list/product-list.component';
-import { CartComponent } from './cart/cart.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -20,7 +19,6 @@ export const routes: Routes = [
         children: [
             { path: '', component: HomeComponent }, // Default: Show Home inside Dashboard
             { path: 'products', component: ProductComponent }, // Products inside Dashboard
-            { path: 'cart', component: CartComponent}
         ] 
     },
 

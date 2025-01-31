@@ -3,10 +3,9 @@ import { Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { LocalStorageService } from 'ngx-webstorage';
 import { AuthService } from '../services/auth.service';
-import { CartComponent } from "../cart/cart.component";
 @Component({
   selector: 'app-user-dashboard',
-  imports: [NgIf, RouterModule, CartComponent],
+  imports: [NgIf, RouterModule],
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.css',
   standalone: true,  // Declaring this as a standalone component
