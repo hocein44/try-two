@@ -1,0 +1,35 @@
+.payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  .success-message {
+    text-align: center;
+  }
+  
+  .success-message h3 {
+    color: #4CAF50;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .success-message ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .success-message li {
+    background-color: #f1f1f1;
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 4px;
+  }
+  
+  button[mat-raised-button] {
+    margin-top: 16px;
+  }

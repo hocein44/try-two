@@ -65,10 +65,11 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  openPaymentModal(product: Product, stock: number) { // ✅ Add payment modal
+  openPaymentModal(product: Product) { // Only passing product
     this.dialog.open(PaymentModalComponent, {
       width: '400px',
-      data: { product, stock }
+      data: { product, quantity: 1 } // Set quantity to 1 by default
     });
   }
+  
 }

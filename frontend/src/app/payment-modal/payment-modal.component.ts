@@ -1,20 +1,29 @@
-import { Component,Inject  } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';  // Import this!
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NgFor,NgIf } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-payment-modal',
-  imports: [NgFor,NgIf,ReactiveFormsModule],
+  imports: [NgIf,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatDialogModule,
+  ],
   templateUrl: './payment-modal.component.html',
-  styleUrl: './payment-modal.component.css'
+  styleUrls: ['./payment-modal.component.css'],
 })
 export class PaymentModalComponent {
   paymentForm: FormGroup;
-  giftCardCodes: string[] = [];
+  giftCardCode: string = '';  // For single card code
   paymentSuccess = false;
 
   constructor(
@@ -27,7 +36,6 @@ export class PaymentModalComponent {
       cardNumber: ['', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]],
       expiry: ['', Validators.required],
       cvv: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(4)]],
-      quantity: [1, [Validators.required, Validators.min(1), Validators.max(data.stock)]]
     });
   }
 
@@ -35,23 +43,23 @@ export class PaymentModalComponent {
     if (this.paymentForm.invalid) return;
 
     const paymentData = {
-      productId: this.data.product._id,
-      quantity: this.paymentForm.value.quantity,
+      productId: this.data.product._id,  // Product ID
       paymentInfo: {
         cardNumber: this.paymentForm.value.cardNumber,
         expiry: this.paymentForm.value.expiry,
-        cvv: this.paymentForm.value.cvv
-      }
+        cvv: this.paymentForm.value.cvv,
+      },
     };
 
+    // Call the backend API to process payment
     this.apiService.processPayment(paymentData).subscribe({
       next: (response: any) => {
         this.paymentSuccess = true;
-        this.giftCardCodes = response.cardCodes;
+        this.giftCardCode = response.cardCode;  // Get single card code
       },
       error: (error) => {
-        alert("Payment failed: " + error.error.message);
-      }
+        alert('Payment failed: ' + error.error.message);
+      },
     });
   }
 

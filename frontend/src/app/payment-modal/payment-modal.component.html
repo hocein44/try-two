@@ -1,32 +1,51 @@
 <h2 mat-dialog-title>Payment Details</h2>
+<br>
+<mat-dialog-content>
+  <div *ngIf="!paymentSuccess; else successTemplate">
+    <form [formGroup]="paymentForm" (ngSubmit)="processPayment()" class="payment-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Card Number</mat-label>
+        <input matInput formControlName="cardNumber" type="text" maxlength="16" required />
+        <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('required')">
+          Card number is required
+        </mat-error>
+        <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('minlength') || paymentForm.get('cardNumber')?.hasError('maxlength')">
+          Card number must be 16 digits
+        </mat-error>
+      </mat-form-field>
 
-<div *ngIf="!paymentSuccess; else successTemplate">
-  <form [formGroup]="paymentForm" (ngSubmit)="processPayment()">
-    <div>
-      <label>Card Number:</label>
-      <input formControlName="cardNumber" type="text" maxlength="16" required />
-    </div>
-    <div>
-      <label>Expiry Date:</label>
-      <input formControlName="expiry" type="text" placeholder="MM/YY" required />
-    </div>
-    <div>
-      <label>CVV:</label>
-      <input formControlName="cvv" type="text" maxlength="4" required />
-    </div>
-    <div>
-      <label>Quantity:</label>
-      <input formControlName="quantity" type="number" min="1" [max]="data.stock" required />
-    </div>
-    <button type="submit" [disabled]="paymentForm.invalid">Pay Now</button>
-  </form>
-</div>
+      <mat-form-field appearance="outline">
+        <mat-label>Expiry Date</mat-label>
+        <input matInput formControlName="expiry" type="text" placeholder="MM/YY" required />
+        <mat-error *ngIf="paymentForm.get('expiry')?.hasError('required')">
+          Expiry date is required
+        </mat-error>
+      </mat-form-field>
 
-<ng-template #successTemplate>
-  <h3>Payment Successful!</h3>
-  <p>Your Gift Card Codes:</p>
-  <ul>
-    <li *ngFor="let code of giftCardCodes">{{ code }}</li>
-  </ul>
-  <button (click)="close()">Close</button>
-</ng-template>
+      <mat-form-field appearance="outline">
+        <mat-label>CVV</mat-label>
+        <input matInput formControlName="cvv" type="text" maxlength="4" required />
+        <mat-error *ngIf="paymentForm.get('cvv')?.hasError('required')">
+          CVV is required
+        </mat-error>
+        <mat-error *ngIf="paymentForm.get('cvv')?.hasError('minlength') || paymentForm.get('cvv')?.hasError('maxlength')">
+          CVV must be 3 or 4 digits
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="paymentForm.invalid">
+        Pay Now
+      </button>
+    </form>
+  </div>
+
+  <ng-template #successTemplate>
+    <div class="success-message">
+      <h3>Payment Successful!</h3>
+      <p>Your Gift Card Code:</p>
+      <p>{{ giftCardCode }}</p>
+      <button mat-raised-button color="primary" (click)="close()">Close</button>
+    </div>
+  </ng-template>
+  
+</mat-dialog-content>
