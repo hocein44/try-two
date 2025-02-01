@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { Product } from '../interfaces/product';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'; // ✅ Import MatDialog
+import { PaymentModalComponent } from '../payment-modal/payment-modal.component'; // ✅ Import Payment Modal
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [NgFor, CommonModule],
+  imports: [NgFor, CommonModule, MatDialogModule], // ✅ Import MatDialogModule
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
@@ -16,14 +18,14 @@ export class ProductComponent implements OnInit {
   categorizedProducts: { [key: string]: Product[] } = {};
   groupedProducts: { [key: string]: { product: Product, count: number } } = {}; // Updated to count occurrences
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private dialog: MatDialog) {} // ✅ Inject MatDialog
 
   ngOnInit() {
     this.apiService.getProducts().subscribe({
       next: (response: Product[]) => {
         this.products = response;
         this.categorizeProducts();
-        this.groupProducts(); // Updated function
+        this.groupProducts();
       },
       error: (error: Error) => {
         console.error('Error fetching products', error);
@@ -62,5 +64,11 @@ export class ProductComponent implements OnInit {
       key => this.groupedProducts[key].product.category === category
     );
   }
- 
+
+  openPaymentModal(product: Product, stock: number) { // ✅ Add payment modal
+    this.dialog.open(PaymentModalComponent, {
+      width: '400px',
+      data: { product, stock }
+    });
+  }
 }

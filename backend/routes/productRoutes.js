@@ -99,5 +99,34 @@ router.delete('/DelProducts/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+function validatePayment(paymentInfo) {
+  return paymentInfo.cardNumber && paymentInfo.expiry && paymentInfo.cvv;
+}
+
+router.post('/process-payment', async (req, res) => {
+  try {
+      const { productId, paymentInfo } = req.body;
+
+      if (!validatePayment(paymentInfo)) {
+          return res.status(400).json({ message: 'Invalid payment details' });
+      }
+
+      // Find a single available gift card
+      const availableCard = await Product.findOne({ _id: productId });
+
+      if (!availableCard) {
+          return res.status(400).json({ message: 'Gift card out of stock' });
+      }
+
+      const cardCode = availableCard.code;
+
+      // Remove the purchased card from the database
+      await Product.deleteOne({ _id: productId });
+
+      res.status(200).json({ message: 'Payment successful', cardCode });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = router;

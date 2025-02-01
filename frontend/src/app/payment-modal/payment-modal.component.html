@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Payment Details</h2>
+
+<div *ngIf="!paymentSuccess; else successTemplate">
+  <form [formGroup]="paymentForm" (ngSubmit)="processPayment()">
+    <div>
+      <label>Card Number:</label>
+      <input formControlName="cardNumber" type="text" maxlength="16" required />
+    </div>
+    <div>
+      <label>Expiry Date:</label>
+      <input formControlName="expiry" type="text" placeholder="MM/YY" required />
+    </div>
+    <div>
+      <label>CVV:</label>
+      <input formControlName="cvv" type="text" maxlength="4" required />
+    </div>
+    <div>
+      <label>Quantity:</label>
+      <input formControlName="quantity" type="number" min="1" [max]="data.stock" required />
+    </div>
+    <button type="submit" [disabled]="paymentForm.invalid">Pay Now</button>
+  </form>
+</div>
+
+<ng-template #successTemplate>
+  <h3>Payment Successful!</h3>
+  <p>Your Gift Card Codes:</p>
+  <ul>
+    <li *ngFor="let code of giftCardCodes">{{ code }}</li>
+  </ul>
+  <button (click)="close()">Close</button>
+</ng-template>

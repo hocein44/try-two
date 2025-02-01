@@ -30,5 +30,8 @@ export class ApiService {
   deleteProduct(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/DelProducts/${id}`);
   }
+  processPayment(paymentData: any): Observable<any> {
+    return this.http.post('http://localhost:5000/api/process-payment', paymentData);
+  }
   
 }

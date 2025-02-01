@@ -21,9 +21,11 @@
               <span class="badge" [ngClass]="groupedProducts[key].count > 0 ? 'bg-success' : 'bg-danger'">
                 {{ groupedProducts[key].count > 0 ? 'Available' : 'Out of Stock' }}
               </span>
-              <button class="btn btn-primary" [disabled]="groupedProducts[key].count === 0" >
-                Buy Now
-              </button>
+              <button class="btn btn-primary"
+              [disabled]="groupedProducts[key].count === 0"
+              (click)="openPaymentModal(groupedProducts[key].product, groupedProducts[key].count)">
+        Buy Now
+      </button>
             </div>
           </div>
         </div>

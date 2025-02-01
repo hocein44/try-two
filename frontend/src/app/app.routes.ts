@@ -8,7 +8,6 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { ProductListComponent } from './admin/product-list/product-list.component';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
-import { PaymentComponent } from './payment/payment.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -24,8 +23,6 @@ export const routes: Routes = [
             { path: 'signup', component: SignupComponent },
             { path: 'login', component: LoginComponent },
             { path: 'login', component: LoginComponent },
-            { path: 'payment', component: PaymentComponent },
-
         ] 
     },
 
