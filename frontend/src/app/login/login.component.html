@@ -1,25 +1,60 @@
-<!-- /app/auth/login.component.html -->
-  <div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
-      <h2 class="text-center mb-3">Login</h2>
-  
-      <form (ngSubmit)="login()">
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" id="username" class="form-control" [(ngModel)]="username" name="username" placeholder="Enter your username" required>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
+    <h2 class="text-center mb-4">Login</h2>
+
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <!-- Username Field -->
+      <div class="mb-3">
+        <label for="username" class="form-label">User Name</label>
+        <input
+          type="text"
+          id="username"
+          class="form-control"
+          [(ngModel)]="username"
+          name="username"
+          placeholder="Enter your username"
+          required
+        />
+        <div *ngIf="loginForm.submitted && loginForm.controls['username']?.errors" class="text-danger">
+          User Name is required.
         </div>
-  
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" placeholder="Enter your password" required>
+      </div>
+
+      <!-- Password Field -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+        <div *ngIf="loginForm.submitted && loginForm.controls['password']?.errors" class="text-danger">
+          Password is required.
         </div>
-  
-        <button type="submit" class="btn btn-primary w-100">Login</button>
-  
-        <p class="text-center mt-3">
-          Don't have an account? <a [routerLink]="['../signup']">Sign Up</a>
-        </p>
-      </form>
-    </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading">
+        <span *ngIf="!isLoading">Login</span>
+        <span *ngIf="isLoading">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Logging in...
+        </span>
+      </button>
+
+      <!-- Sign Up Link -->
+      <p class="text-center mt-3">
+        Don't have an account? <a [routerLink]="['../signup']">Sign Up</a>
+      </p>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+    </form>
   </div>
-  
+</div>

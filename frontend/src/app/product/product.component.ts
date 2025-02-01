@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { Product } from '../interfaces/product';
-import { CheckoutService } from '../services/checkout.service';
-import { environment } from '../../environments/environment';
-import { loadStripe } from '@stripe/stripe-js'; // Import the loadStripe function
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-product',
@@ -20,12 +16,9 @@ export class ProductComponent implements OnInit {
   categorizedProducts: { [key: string]: Product[] } = {};
   groupedProducts: { [key: string]: { product: Product, count: number } } = {}; // Updated to count occurrences
 
-  constructor(private apiService: ApiService,private checkoutService: CheckoutService,private http: HttpClient) {}
+  constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    loadStripe(environment.stripePublicKey).then((stripe) => {
-      this.stripe = stripe;
-    });
     this.apiService.getProducts().subscribe({
       next: (response: Product[]) => {
         this.products = response;
@@ -69,25 +62,5 @@ export class ProductComponent implements OnInit {
       key => this.groupedProducts[key].product.category === category
     );
   }
-  onCheckout(product: any) {
-    // Prepare the item data to send to the backend
-    const items = [
-      {
-        name: product.name,
-        price: product.price,
-        quantity: 1, // Example for quantity
-      },
-    ];
-
-    // Use the CheckoutService to create a checkout session
-    this.checkoutService.createCheckoutSession(items).subscribe({
-      next: (response) => {
-        // Use the Stripe instance to redirect to the checkout page
-        this.stripe.redirectToCheckout({ sessionId: response.id });
-      },
-      error: (error) => {
-        console.error('Error starting checkout', error);
-      },
-    });
-  }
+ 
 }

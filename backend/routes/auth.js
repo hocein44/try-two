@@ -10,7 +10,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // Signup Route
 router.post('/signup', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username,email,password } = req.body;
 
     // Check if user exists
     const existingUser = await User.findOne({ username });
@@ -23,7 +23,7 @@ router.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create new user
-    const newUser = new User({ username, password: hashedPassword });
+    const newUser = new User({ username,email, password: hashedPassword });
     await newUser.save();
 
     res.status(201).json({ message: 'User registered successfully' });

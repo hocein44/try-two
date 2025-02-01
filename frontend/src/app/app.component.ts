@@ -13,6 +13,9 @@ import { LocalStorageService } from 'ngx-webstorage';
   providers: [AuthService, LocalStorageService]  // Ensure both services are provided here
 })
 export class AppComponent {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
   constructor(private authService: AuthService, private router: Router) {}
 
   logout() {

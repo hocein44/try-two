@@ -6,7 +6,8 @@ const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes'); // Import Routes
 const authRoutes = require('./routes/auth');
 const bodyParser = require('body-parser');
-const checkoutRouter = require('./routes/checkout');
+const adminRoutes = require('./routes/adminRoutes'); // Import Admin Routes
+const paymentRoutes = require('./routes/paymentRoutes');
 
 
 const app = express();
@@ -16,7 +17,8 @@ app.use(bodyParser.json());
 app.use(express.json());
 connectDB();
 // ✅ Use Product Routes
-app.use('/api',productRoutes, authRoutes,checkoutRouter);
+app.use('/api',productRoutes, authRoutes,adminRoutes,paymentRoutes);
+
 
 // Start Server
 const PORT = process.env.PORT || 5000;

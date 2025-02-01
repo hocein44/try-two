@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [RouterModule,NgIf],
+  imports: [RouterModule, NgIf],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css',
   standalone: true,  // Declaring this as a standalone component
@@ -17,7 +17,7 @@ export class AdminDashboardComponent {
   
   logout() {
     this.authService.logout(); // ✅ Clear token
-    this.router.navigate(['/login']); // ✅ Redirect to login
+    this.router.navigate(['/dashboard/login']); // ✅ Redirect to login
   }
 
   isAuthenticated(): boolean {

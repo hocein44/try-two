@@ -7,9 +7,14 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { ProductListComponent } from './admin/product-list/product-list.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { PaymentComponent } from './payment/payment.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    { path: 'home', component: HomeComponent },
+
+
     { 
         path: 'dashboard', 
         component: UserDashboardComponent,
@@ -18,6 +23,9 @@ export const routes: Routes = [
             { path: 'products', component: ProductComponent }, // Products inside Dashboard
             { path: 'signup', component: SignupComponent },
             { path: 'login', component: LoginComponent },
+            { path: 'login', component: LoginComponent },
+            { path: 'payment', component: PaymentComponent },
+
         ] 
     },
 
@@ -25,10 +33,11 @@ export const routes: Routes = [
         path: 'admin-dashboard', 
         component: AdminDashboardComponent,
         children: [
-            { path: '', component: HomeComponent }, // Default page inside admin
+            { path: '', redirectTo:'user',pathMatch: 'full' }, // Default page inside admin
             { path: 'products-list', component: ProductListComponent },  
             { path: 'product-form/:id', component: ProductFormComponent },  
-            { path: 'product-form', component: ProductFormComponent }
+            { path: 'product-form', component: ProductFormComponent },
+            { path: 'user', component: UserManagementComponent },
         ]
     }
 ];
