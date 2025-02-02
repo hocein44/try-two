@@ -3,10 +3,11 @@ import { Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { AuthService } from './services/auth.service';
 import { LocalStorageService } from 'ngx-webstorage';
+import { FooterComponent } from "./footer/footer.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule],
+  imports: [RouterModule, FooterComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],  // Fixed to styleUrls (plural)
   standalone: true,  // Declaring this as a standalone component

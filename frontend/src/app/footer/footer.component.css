@@ -1,0 +1,81 @@
+/* Footer Container */
+.footer {
+    background: linear-gradient(to right, #1a1a1a, #000000);
+    padding: 2rem 0;
+    color: #e2e8f0;
+    text-align: center;
+  }
+  
+  /* Container for centering content */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  /* Logo and Brand Name */
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .brand-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: linear-gradient(to right, #9f7aea, #ed64a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Navigation Links */
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  
+  .nav-link {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: #9f7aea;
+    text-decoration: underline;
+  }
+  
+  /* Social Media Icons */
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .social-icon {
+    color: #9f7aea;
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+  }
+  
+  /* Copyright Text */
+  .copyright {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
