@@ -1,0 +1,42 @@
+<div class="products-page">
+  <div class="container">
+    <!-- Page Header -->
+   
+
+    <!-- Iterate through categories -->
+    <div *ngFor="let category of getCategories()" class="mb-5">
+      <div class="page-header text-center mb-5">
+        <h2 class="page-title">{{ category }}</h2>
+      </div>
+      <div class="row">
+        <!-- Iterate through grouped products in the current category -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let key of getGroupedProductKeys(category)">
+          <div class="card product-card shadow-sm">
+            <div class="product-image">
+              <img [src]="'http://localhost:5000' + groupedProducts[key].product.image" 
+                   alt="{{ groupedProducts[key].product.name }}" 
+                   class="card-img-top">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ groupedProducts[key].product.name }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                ${{ groupedProducts[key].product.price | number: '1.2-2' }}
+              </h6>
+              <p class="card-text">{{ groupedProducts[key].product.description }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="badge" [ngClass]="groupedProducts[key].count > 0 ? 'bg-success' : 'bg-danger'">
+                  {{ groupedProducts[key].count > 0 ? 'Available' : 'Out of Stock' }}
+                </span>
+                <button class="btn btn-primary btn-sm"
+                        [disabled]="groupedProducts[key].count === 0"
+                        (click)="handleBuyNow(groupedProducts[key].product)">
+                  Buy Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

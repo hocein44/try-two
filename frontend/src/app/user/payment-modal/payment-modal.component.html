@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Payment Details</h2>
+<mat-dialog-content>
+  <div class="payment-container">
+    <!-- Gift Card Preview -->
+    <div class="gift-card-preview">
+      <img [src]="'http://localhost:5000' + data.product.image" alt="{{ data.product.name }}" class="gift-card-image" />
+      <h3>{{ data.product.name }}</h3>
+      <p class="price">${{ data.product.price}}</p>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-form-container">
+      <div *ngIf="!paymentSuccess; else successTemplate">
+        <form [formGroup]="paymentForm" (ngSubmit)="processPayment()" class="payment-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Card Number</mat-label>
+            <input matInput formControlName="cardNumber" type="text" maxlength="16" required />
+            <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('required')">
+              Card number is required
+            </mat-error>
+            <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('minlength') || paymentForm.get('cardNumber')?.hasError('maxlength')">
+              Card number must be 16 digits
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Expiry Date</mat-label>
+            <input matInput formControlName="expiry" type="text" placeholder="MM/YY" required />
+            <mat-error *ngIf="paymentForm.get('expiry')?.hasError('required')">
+              Expiry date is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>CVV</mat-label>
+            <input matInput formControlName="cvv" type="text" maxlength="4" required />
+            <mat-error *ngIf="paymentForm.get('cvv')?.hasError('required')">
+              CVV is required
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="paymentForm.invalid">
+            Pay Now
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Success Template -->
+  <ng-template #successTemplate>
+    <div class="success-message">
+      <h3>Payment Successful!</h3>
+      <p>Your Gift Card Code:</p>
+      <div class="gift-card-code">{{ giftCardCode }}</div>
+      <button mat-raised-button color="primary" (click)="close()">Close</button>
+    </div>
+  </ng-template>
+</mat-dialog-content>

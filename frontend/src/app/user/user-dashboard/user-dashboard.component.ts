@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { LocalStorageService } from 'ngx-webstorage';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-user-dashboard',
   imports: [NgIf, RouterModule],

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
-import { ApiService } from '../services/api.service';
-import { Product } from '../interfaces/product';
+import { ApiService } from '../../services/api.service';
+import { Product } from '../../interfaces/product';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 
@@ -16,7 +16,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  stripe: any;
   products: Product[] = [];
   categorizedProducts: { [key: string]: Product[] } = {};
   groupedProducts: { [key: string]: { product: Product, count: number } } = {};
@@ -82,7 +81,7 @@ export class ProductComponent implements OnInit {
 
   openPaymentModal(product: Product) {
     const dialogRef = this.dialog.open(PaymentModalComponent, {
-      width: '400px',
+      width: '700px',
       data: { product, quantity: 1 }
     });
 
