@@ -14,6 +14,7 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
 
 
+
     { 
         path: 'dashboard', 
         component: UserDashboardComponent,
@@ -21,7 +22,6 @@ export const routes: Routes = [
             { path: '', component: HomeComponent }, // Default: Show Home inside Dashboard
             { path: 'products', component: ProductComponent }, // Products inside Dashboard
             { path: 'signup', component: SignupComponent },
-            { path: 'login', component: LoginComponent },
             { path: 'login', component: LoginComponent },
         ] 
     },
