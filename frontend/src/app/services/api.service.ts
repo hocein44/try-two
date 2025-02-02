@@ -31,7 +31,10 @@ export class ApiService {
     return this.http.delete<any>(`${this.apiUrl}/DelProducts/${id}`);
   }
   processPayment(paymentData: any): Observable<any> {
-    return this.http.post('http://localhost:5000/api/process-payment', paymentData);
+    return this.http.post(`${this.apiUrl}/process-payment`, paymentData);
   }
-  
+    // Get purchase history for a user
+    getPurchaseHistory(userId: string): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/purchase-history/${userId}`);
+    }
 }

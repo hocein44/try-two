@@ -52,6 +52,7 @@ export class PaymentModalComponent {
         expiry: this.paymentForm.value.expiry,
         cvv: this.paymentForm.value.cvv,
       },
+      userId: this.data.userId  // Pass userId to the backend
     };
 
     // Call the backend API to process payment

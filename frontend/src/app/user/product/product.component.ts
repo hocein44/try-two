@@ -26,10 +26,17 @@ export class ProductComponent implements OnInit {
       // Redirect to login page if not authenticated
       this.router.navigate(['/dashboard/login']);
     } else {
-      // Proceed to open the payment modal if authenticated
-      this.openPaymentModal(product);
+      // Retrieve the userId from the AuthService
+      const userId = this.authService.getUserId();
+      if (userId) {
+        // Proceed to open the payment modal if authenticated
+        this.openPaymentModal(product, userId);
+      } else {
+        console.error("User ID is not available");
+      }
     }
   }
+  
   ngOnInit() {
     this.fetchProducts();
   }
@@ -79,10 +86,10 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  openPaymentModal(product: Product) {
+  openPaymentModal(product: Product,userId: string){
     const dialogRef = this.dialog.open(PaymentModalComponent, {
       width: '700px',
-      data: { product, quantity: 1 }
+      data: { product, quantity: 1, userId: userId }
     });
 
     // Subscribe to the payment success event and reload the products

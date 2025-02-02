@@ -42,4 +42,12 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
+  getUserId(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1])); // Decode the JWT
+      return payload.userId;  // Assuming the user ID is stored as 'userId' in the payload
+    }
+    return null;
+  }
 }

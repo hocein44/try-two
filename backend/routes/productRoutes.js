@@ -1,9 +1,11 @@
 const express = require('express');
 const Product = require('../models/Product'); // Import Product Model
+const PurchaseHistory = require('../models/PurchaseHistory');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
+
 
 // Ensure the 'uploads' folder exists or create it
 const uploadDirectory = path.join(__dirname, '..', 'uploads');
@@ -105,13 +107,13 @@ function validatePayment(paymentInfo) {
 
 router.post('/process-payment', async (req, res) => {
   try {
-      const { productId, paymentInfo } = req.body;
+      const { productId, paymentInfo, userId } = req.body;
 
       if (!validatePayment(paymentInfo)) {
           return res.status(400).json({ message: 'Invalid payment details' });
       }
 
-      // Find a single available gift card
+      // Find the available gift card
       const availableCard = await Product.findOne({ _id: productId });
 
       if (!availableCard) {
@@ -119,14 +121,41 @@ router.post('/process-payment', async (req, res) => {
       }
 
       const cardCode = availableCard.code;
+      const productName = availableCard.name;
+      const price = availableCard.price; // Get the card price
 
       // Remove the purchased card from the database
       await Product.deleteOne({ _id: productId });
 
-      res.status(200).json({ message: 'Payment successful', cardCode });
+      // Save purchase history
+      const newPurchase = new PurchaseHistory({
+          userId,
+          productName,
+          cardCode,
+          price // Store the price
+      });
+
+      await newPurchase.save();
+
+      res.status(200).json({ message: 'Payment successful', cardCode, price });
   } catch (error) {
       res.status(500).json({ error: error.message });
   }
 });
+router.get('/purchase-history/:userId', async (req, res) => {
+  try {
+      const userId = req.params.userId;
+      const purchases = await PurchaseHistory.find({ userId });
+
+      if (!purchases.length) {
+          return res.status(404).json({ message: 'No purchase history found' });
+      }
+
+      res.status(200).json(purchases);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
 
 module.exports = router;

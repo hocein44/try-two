@@ -1,31 +1,67 @@
 <div class="container-fluid p-0">
-  <nav class="navbar navbar-expand-lg navbar-light shadow-sm sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm sticky-top">
       <div class="container">
-          <a class="navbar-brand" href="">
-              <img src="logo.png" alt="GS - GAMING STORE" class="logo"> <!-- Added a class for easier styling -->
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-              <ul class="navbar-nav">
-                  <li class="nav-item">
-                      <a class="nav-link" routerLink="./" routerLinkActive="router-link-active">Home</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" routerLink="./about">About</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" routerLink="./products" routerLinkActive="router-link-active">Products</a>
-                  </li>
-              </ul>
-              <a *ngIf="!isAuthenticated()" routerLink="./login" class="btn btn-outline-dark ms-3">LOGIN</a>
-              <button *ngIf="isAuthenticated()" class="btn btn-outline-danger ms-3" (click)="logout()">LOGOUT</button>
-          </div>
+        <a class="navbar-brand" href="">
+          <img src="logo.png" alt="GS - GAMING STORE" class="logo"> <!-- Added a class for easier styling -->
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="./" routerLinkActive="router-link-active">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="./about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="./products" routerLinkActive="router-link-active">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="modal" data-bs-target="#scrollableModal"  (click)="fetchPurchaseHistory()">My cards</a>
+              </li>
+            </ul>
+          <a *ngIf="!isAuthenticated()" routerLink="./login" class="btn btn-outline-dark ms-3">LOGIN</a>
+          <button *ngIf="isAuthenticated()" class="btn btn-outline-danger ms-3" (click)="logout()">LOGOUT</button>
+        </div>
       </div>
-  </nav>
-  <!-- Main Content -->
-  <div class="main-content">
+    </nav>
+  
+    <!-- Main Content -->
+    <div class="main-content">
       <router-outlet></router-outlet>
+    </div>
   </div>
-</div>
+  
+ <!-- Scrollable Modal -->
+<div class="modal fade" id="scrollableModal" tabindex="-1" aria-labelledby="scrollableModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="scrollableModalLabel">My Purchase History</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul *ngIf="purchaseHistory.length > 0; else noHistory" class="list-group">
+            <li *ngFor="let purchase of purchaseHistory" >
+                <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                    <div class="card-header">{{ purchase.productName }}</div>
+                    <div class="card-body">
+                      <h5 class="card-title">Price : ${{ purchase.price}}</h5>
+                      <p class="card-text">code : {{ purchase.cardCode }}</p>
+                    </div>
+              </div>
+            </li>
+          </ul>
+          <ng-template #noHistory>
+            <p class="text-center text-muted">No purchase history found.</p>
+          </ng-template>
+        </div>
+        <div class="modal-footer border-top-0">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
