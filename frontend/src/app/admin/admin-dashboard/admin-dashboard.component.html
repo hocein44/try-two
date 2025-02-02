@@ -1,21 +1,26 @@
+
+
+
 <div class="container-fluid p-0">
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-light shadow-sm sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">GS - GAMING STORE</a>
+      <a class="navbar-brand" href="">
+        <img src="logo.png" alt="GS - GAMING STORE" class="logo"> <!-- Added a class for easier styling -->
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
+         
           <li class="nav-item"><a class="nav-link" routerLink="./user">Users Management</a></li>
           <li class="nav-item"><a class="nav-link" routerLink="./products-list" routerLinkActive="router-link-active">Product Management</a></li>
-        </ul>
-        <!-- <a href="#" class="btn btn-outline-dark ms-3">CONTACT</a> -->
-        <a *ngIf="!isAuthenticated()" routerLink="/login" class="btn btn-outline-dark ms-3">LOGIN</a>
-        <!-- Show Logout button if authenticated -->
+          </ul>
+        <a *ngIf="!isAuthenticated()" routerLink="./login" class="btn btn-outline-dark ms-3">LOGIN</a>
         <button *ngIf="isAuthenticated()" class="btn btn-outline-danger ms-3" (click)="logout()">LOGOUT</button>
       </div>
     </div>
   </nav>
-<router-outlet></router-outlet>
+
+  <router-outlet></router-outlet>
+</div>
