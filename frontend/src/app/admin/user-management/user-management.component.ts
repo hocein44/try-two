@@ -59,9 +59,10 @@ export class UserManagementComponent implements OnInit {
 
   // Set user to edit
   setEditUser(user: User): void {
-    this.editUser = { ...user };
+    this.editUser = { ...user }; // Ensures all properties, including role, are copied
     this.clearMessages();
   }
+  
 
   // Update a user
   updateUser(): void {
