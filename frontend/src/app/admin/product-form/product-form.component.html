@@ -1,45 +1,111 @@
 <div class="product-form-container">
-  <h3>{{ productId ? 'Edit' : 'Add' }} Product</h3>
-  <form (ngSubmit)="saveProduct()" class="product-form">
+  <h3 class="form-title">{{ productId ? 'Edit' : 'Add' }} Product</h3>
+  <form #form="ngForm" (ngSubmit)="saveProduct()" class="product-form">
+    <!-- Success Message -->
     <div *ngIf="saveSuccess" class="success-message">
-      Product saved successfully! Redirecting...
+      <span>Product saved successfully! Redirecting...</span>
     </div>
+
+    <!-- Name Field -->
     <div class="form-group">
       <label for="name">Name:</label>
-      <input id="name" [(ngModel)]="product.name" name="name" required class="form-control">
+      <input
+        id="name"
+        [(ngModel)]="product.name"
+        name="name"
+        required
+        class="form-control"
+        #name="ngModel"
+      />
+      <div *ngIf="name.invalid && name.touched" class="error-message">
+        Name is required.
+      </div>
     </div>
 
+    <!-- Price Field -->
     <div class="form-group">
       <label for="price">Price:</label>
-      <input id="price" type="number" [(ngModel)]="product.price" name="price" required class="form-control">
+      <input
+        id="price"
+        type="number"
+        [(ngModel)]="product.price"
+        name="price"
+        required
+        class="form-control"
+        #price="ngModel"
+      />
+      <div *ngIf="price.invalid && price.touched" class="error-message">
+        Price is required.
+      </div>
     </div>
 
+    <!-- Description Field -->
     <div class="form-group">
       <label for="description">Description:</label>
-      <textarea id="description" [(ngModel)]="product.description" name="description" required class="form-control"></textarea>
+      <textarea
+        id="description"
+        [(ngModel)]="product.description"
+        name="description"
+        required
+        class="form-control"
+        #description="ngModel"
+      ></textarea>
+      <div *ngIf="description.invalid && description.touched" class="error-message">
+        Description is required.
+      </div>
     </div>
 
+    <!-- Image Field -->
     <div class="form-group">
       <label for="image">Image:</label>
-      <input id="image" type="file" (change)="onFileSelected($event)" class="form-control">
+      <input
+        id="image"
+        type="file"
+        (change)="onFileSelected($event)"
+        class="form-control"
+      />
     </div>
 
+    <!-- Category Field -->
     <div class="form-group">
       <label for="category">Category:</label>
-      <input id="category" [(ngModel)]="product.category" name="category" required class="form-control">
+      <input
+        id="category"
+        [(ngModel)]="product.category"
+        name="category"
+        required
+        class="form-control"
+        #category="ngModel"
+      />
+      <div *ngIf="category.invalid && category.touched" class="error-message">
+        Category is required.
+      </div>
     </div>
 
+    <!-- Code Field -->
     <div class="form-group">
       <label for="code">Code:</label>
-      <input id="code" [(ngModel)]="product.code" name="code" required class="form-control">
+      <input
+        id="code"
+        [(ngModel)]="product.code"
+        name="code"
+        required
+        class="form-control"
+        #code="ngModel"
+      />
+      <div *ngIf="code.invalid && code.touched" class="error-message">
+        Code is required.
+      </div>
     </div>
 
-    <button type="submit" class="btn-submit" [disabled]="isSaving">
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="btn-submit"
+      [disabled]="isSaving || form.invalid"
+    >
       <span *ngIf="!isSaving">Save</span>
       <span *ngIf="isSaving">Saving...</span>
     </button>
-
-    <!-- Success message -->
-    
   </form>
 </div>
